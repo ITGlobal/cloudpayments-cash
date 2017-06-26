@@ -1,4 +1,4 @@
-version: 1.0.{build}
+version: 1.0.{build}-{branch}
 image: Visual Studio 2017
 configuration: Release
 build_script:
@@ -6,3 +6,10 @@ build_script:
 test_script:
 - ps: '& ./scripts/test.ps1'
 - ps: '& ./scripts/pack.ps1'
+deploy:
+- provider: NuGet
+  api_key:
+    secure: r5vF3QENzP28+dU6gvmD7Sqbdt5Ti43yhuSye3O7TJxKT+6vuponJ7tVwkGkotH7
+  on:
+    branch: master
+  skip_symbols: true
