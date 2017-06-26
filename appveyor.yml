@@ -13,6 +13,7 @@ deploy:
   on:
     branch: master
   skip_symbols: true
+  artifact: /.*\.nupkg/
 notifications:
 - provider: Slack
   incoming_webhook: https://hooks.slack.com/services/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
