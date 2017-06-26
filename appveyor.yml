@@ -2,4 +2,7 @@ version: 1.0.{build}
 image: Visual Studio 2017
 configuration: Release
 build_script:
-- ps: '& ./build.ps1'
+- ps: '& ./scripts/build.ps1'
+test_script:
+- ps: '& ./scripts/test.ps1'
+- ps: '& ./scripts/pack.ps1'

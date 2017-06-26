@@ -14,9 +14,3 @@ Write-Host "Building project" -ForegroundColor Cyan
 if($LASTEXITCODE) {
     exit 1
 }
-
-Write-Host "Packaging project" -ForegroundColor Cyan
-& dotnet pack $PROJECT -c $CONFIGURATION -o $OUTDIR
-if($LASTEXITCODE) {
-    exit 1
-}
