@@ -1,4 +1,4 @@
-version: 1.0.{build}-{branch}
+version: 0.0.{build}-{branch}
 image: Visual Studio 2017
 configuration: Release
 build_script:
@@ -13,7 +13,7 @@ deploy:
   api_key:
     secure: r5vF3QENzP28+dU6gvmD7Sqbdt5Ti43yhuSye3O7TJxKT+6vuponJ7tVwkGkotH7
   on:
-    branch: master
+    appveyor_repo_tag: true
   skip_symbols: true
   artifact: /.*\.nupkg/
 notifications:
