@@ -22,7 +22,7 @@ If project use dependency injection, CashApi can register it services in contain
 ```csharp
 public IServiceProvider ConfigureServices(IServiceCollection services)
 {
-    CashApi.SetupContainer(services, new CashSettings { ... })
+    services.AddCloudPaymentCash(new CashSettings { ... })
     ...
 }
 ```
@@ -33,7 +33,8 @@ var api = CashApi.GetDefault(new CashSettings { ... }, loggerFactory)
 await api.Receipt(new ReceiptContract { ... }, 123, token)
 ``` 
 Second argument (`123`) is optional and it is used to make requests idempotent.
-See [cloudpayments api docs](https://cloudpayments.ru/docs/api/kassa) for more details about ReceiptContract.  
+
+See [cloudpayments api docs](https://cloudpayments.ru/docs/api/kassa) for more details about `ReceiptContract`.  
 
 ## CashSettings description
 
