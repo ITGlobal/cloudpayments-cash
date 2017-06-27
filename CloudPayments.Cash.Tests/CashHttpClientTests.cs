@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using CloudPayments.Cash.Tests.Utils;
 using FluentAssertions;
@@ -34,6 +33,7 @@ namespace CloudPayments.Cash.Tests
         }
 
 
+        [KnownType(typeof(TestResponse))]
         public class TestResponse
         {
             public bool Success { get; set; }
@@ -54,5 +54,7 @@ namespace CloudPayments.Cash.Tests
             First = 1,
             Second = 2
         }
+
     }
+
 }

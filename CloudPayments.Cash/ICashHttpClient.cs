@@ -19,6 +19,8 @@ namespace CloudPayments.Cash
         /// <param name="token">cancellation token</param>
         /// <returns>response contract object</returns>
         Task<TResponse> PostAsync<TRequest, TResponse>(string url, TRequest request, string requestId = null,
-            CancellationToken token = default(CancellationToken)) where TResponse : class;
+            CancellationToken token = default(CancellationToken))
+            where TRequest : class
+            where TResponse : class;
     }
 }

@@ -32,7 +32,9 @@ namespace CloudPayments.Cash
         /// <param name="requestId">parameter for idempotent requests</param>
         /// <param name="token">cancellation token</param>
         /// <returns>response contract object</returns>
-        public async Task<TResponse> PostAsync<TRequest, TResponse>(string url, TRequest request, string requestId = null, CancellationToken token = default(CancellationToken)) where TResponse : class
+        public async Task<TResponse> PostAsync<TRequest, TResponse>(string url, TRequest request, string requestId = null, CancellationToken token = default(CancellationToken)) 
+            where TRequest : class
+            where TResponse : class
         {
             _logger.LogTrace($"make request to {url}");
             _client.SetupIdempotent(requestId);
@@ -56,7 +58,7 @@ namespace CloudPayments.Cash
         /// <typeparam name="TObject">Type of object</typeparam>
         /// <param name="obj">object</param>
         /// <returns>memory stream with json data</returns>
-        public static Stream ToJsonStream<TObject>(TObject obj)
+        public static Stream ToJsonStream<TObject>(TObject obj) where TObject : class
         {
             var serializer = new DataContractJsonSerializer(typeof(TObject));
             var stream = new MemoryStream();
@@ -85,7 +87,7 @@ namespace CloudPayments.Cash
         /// <typeparam name="TObject"></typeparam>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public static StreamContent ToJsonStreamContent<TObject>(TObject obj)
+        public static StreamContent ToJsonStreamContent<TObject>(TObject obj) where TObject : class
         {
             return new StreamContent(ToJsonStream(obj));
         }
@@ -96,7 +98,7 @@ namespace CloudPayments.Cash
         /// <typeparam name="TObject">type of object</typeparam>
         /// <param name="obj">object</param>
         /// <returns>json string</returns>
-        public static async Task<string> ToJson<TObject>(TObject obj)
+        public static async Task<string> ToJson<TObject>(TObject obj) where TObject : class
         {
             return await ToJsonStreamContent(obj).ReadAsStringAsync();
         }
@@ -107,7 +109,7 @@ namespace CloudPayments.Cash
         /// <typeparam name="TObject"></typeparam>
         /// <param name="obj"></param>
         /// <returns>StringContent object</returns>
-        public static async Task<StringContent> ToJsonStringContent<TObject>(TObject obj)
+        public static async Task<StringContent> ToJsonStringContent<TObject>(TObject obj) where TObject : class
         {
             return new StringContent(await ToJson(obj), Encoding.UTF8, "application/json");
         }
