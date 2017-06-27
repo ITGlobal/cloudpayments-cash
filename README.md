@@ -38,13 +38,12 @@ See [cloudpayments api docs](https://cloudpayments.ru/docs/api/kassa) for more d
 
 ## CashSettings description
 
-| Name | Description | Default |
-|-----|-----|-----|
-| PublicId | Public ID from CloudPaynets site settings | |
-| ApiSecret | ApiSecret from CloudPaynets site settings | |
-| Endpoint | Api endpoint | https://api.cloudpayments.ru |
-| Test | Test mode | false |
-
-
+| Name      | Description                                                            | Default                      |
+| --------- | ---------------------------------------------------------------------- | ---------------------------- |
+| PublicId  | Public ID from CloudPaynets site settings                              |                              |
+| ApiSecret | ApiSecret from CloudPaynets site settings                              |                              |
+| Endpoint  | Api endpoint                                                           | https://api.cloudpayments.ru |
+| Inn       | Organization INN number. Optional. INN can be set in `ReceiptContract` |                              |
+| Test      | Test mode                                                              | false                        |
 
 

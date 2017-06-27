@@ -26,7 +26,11 @@ namespace CloudPayments.Cash
         public async Task<CashResponse> Receipt(ReceiptContract contract, string requestId = null, CancellationToken token = default(CancellationToken))
         {
             var url = _settings.Test ? "/test" : "/kkt/receipt";
-            return await _cashHttpClient.PostAsync<ReceiptContract, CashResponse>(url, contract, requestId, token);
+            if (string.IsNullOrWhiteSpace(contract.Inn))
+            {
+                contract.Inn = _settings.Inn;
+            }
+            return await _cashHttpClient.PostAsync<ReceiptContract, CashResponse>(url, contract, requestId, token).ConfigureAwait(false);
         }
 
         #region Static
