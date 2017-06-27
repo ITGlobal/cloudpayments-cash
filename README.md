@@ -2,6 +2,8 @@
 C# client for cloudpayments cash api
 
 [![Build status](https://ci.appveyor.com/api/projects/status/1rrw11v9sw3cftj8/branch/master?svg=true)](https://ci.appveyor.com/project/itgloballlc/cloudpayments-cash/branch/master)
+[![NuGet](https://img.shields.io/nuget/v/CloudPayments.Cash.svg)](https://www.nuget.org/packages/CloudPayments.Cash/)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/ITGlobal/cloudpayments-cash/master/LICENSE)
 
 ## Usage
 Get CashApi object with default implementation
