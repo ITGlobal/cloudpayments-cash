@@ -12,6 +12,6 @@ namespace CloudPayments.Cash
         /// <param name="requestId"></param>
         void SetupIdempotent(string requestId);
         
-        Task<HttpResponseMessage> PostAsync(string url, StreamContent toJsonsStreamContent, CancellationToken token);
+        Task<HttpResponseMessage> PostAsync(string url, HttpContent content, CancellationToken token);
     }
 }

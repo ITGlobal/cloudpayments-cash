@@ -37,9 +37,9 @@ namespace CloudPayments.Cash
             }
         }
 
-        public Task<HttpResponseMessage> PostAsync(string url, StreamContent streamContent, CancellationToken token)
+        public Task<HttpResponseMessage> PostAsync(string url, HttpContent content, CancellationToken token)
         {
-            return _client.PostAsync(url, streamContent, token);
+            return _client.PostAsync(url, content, token);
         }
     }
 }

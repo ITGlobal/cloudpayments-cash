@@ -1,7 +1,5 @@
-using System;
 using System.IO;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading;
@@ -39,11 +37,11 @@ namespace CloudPayments.Cash
             _logger.LogTrace($"make request to {url}");
             _client.SetupIdempotent(requestId);
 
-            using (var requestStreamContent = ToJsonsStreamContent(request))
-            using (var response = await _client.PostAsync(url, requestStreamContent, token))
+            using (var stringContent = await ToJsonStringContent(request))
+            using (var response = await _client.PostAsync(url, stringContent, token))
             using (var content = response.Content)
             {
-                var result = FromJsonStram<TResponse>(await content.ReadAsStreamAsync());
+                var result = FromJsonStream<TResponse>(await content.ReadAsStreamAsync());
                 _logger.LogTrace($"response successfully received");
                 return result;
             }
@@ -58,7 +56,7 @@ namespace CloudPayments.Cash
         /// <typeparam name="TObject">Type of object</typeparam>
         /// <param name="obj">object</param>
         /// <returns>memory stream with json data</returns>
-        public static Stream ToJsonsStream<TObject>(TObject obj)
+        public static Stream ToJsonStream<TObject>(TObject obj)
         {
             var serializer = new DataContractJsonSerializer(typeof(TObject));
             var stream = new MemoryStream();
@@ -74,7 +72,7 @@ namespace CloudPayments.Cash
         /// <typeparam name="TObject">Type of object</typeparam>
         /// <param name="stream">stream with json data</param>
         /// <returns>object with json data</returns>
-        public static TObject FromJsonStram<TObject>(Stream stream) where TObject : class
+        public static TObject FromJsonStream<TObject>(Stream stream) where TObject : class
         {
             var serializer = new DataContractJsonSerializer(typeof(TObject));
             var json = serializer.ReadObject(stream) as TObject;
@@ -87,9 +85,31 @@ namespace CloudPayments.Cash
         /// <typeparam name="TObject"></typeparam>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public static StreamContent ToJsonsStreamContent<TObject>(TObject obj)
+        public static StreamContent ToJsonStreamContent<TObject>(TObject obj)
         {
-            return new StreamContent(ToJsonsStream(obj));
+            return new StreamContent(ToJsonStream(obj));
+        }
+
+        /// <summary>
+        /// Make json string from obj
+        /// </summary>
+        /// <typeparam name="TObject">type of object</typeparam>
+        /// <param name="obj">object</param>
+        /// <returns>json string</returns>
+        public static async Task<string> ToJson<TObject>(TObject obj)
+        {
+            return await ToJsonStreamContent(obj).ReadAsStringAsync();
+        }
+
+        /// <summary>
+        /// Make json StringContent from obj
+        /// </summary>
+        /// <typeparam name="TObject"></typeparam>
+        /// <param name="obj"></param>
+        /// <returns>StringContent object</returns>
+        public static async Task<StringContent> ToJsonStringContent<TObject>(TObject obj)
+        {
+            return new StringContent(await ToJson(obj), Encoding.UTF8, "application/json");
         }
 
         #endregion

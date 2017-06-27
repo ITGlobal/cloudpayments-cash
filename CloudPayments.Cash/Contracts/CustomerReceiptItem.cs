@@ -2,6 +2,7 @@
 
 namespace CloudPayments.Cash.Contracts
 {
+    [DataContract]
     public class CustomerReceiptItem
     {
         [DataMember(Name = "label")]

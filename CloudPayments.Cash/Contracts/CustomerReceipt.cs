@@ -3,8 +3,10 @@ using System.Runtime.Serialization;
 
 namespace CloudPayments.Cash.Contracts
 {
+    [DataContract]
     public class CustomerReceipt
     {
+        [DataMember(Name = "Items")]
         public List<CustomerReceiptItem> Items { get; set; }
         
         [DataMember(Name="taxationSystem")]
