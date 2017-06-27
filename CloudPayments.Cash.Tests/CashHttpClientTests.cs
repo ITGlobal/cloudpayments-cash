@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Threading;
 using System.Threading.Tasks;
+using CloudPayments.Cash.Tests.Utils;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -20,7 +18,7 @@ namespace CloudPayments.Cash.Tests
             var client = new CashHttpClient(new TestHttpHandler((json) =>
             {
                 json.Should().Be("{\"test\":\"asdfasdf\",\"testenum\":1}");
-            }), logger.Object);
+            }, new TestResponse { Success = true }), logger.Object);
 
             var result = await client.PostAsync<TestRequest, TestResponse>("/some/api", new TestRequest { TestEnum = TestEnum.First, Test = "asdfasdf" });
             result.Success.Should().BeTrue();
@@ -29,32 +27,12 @@ namespace CloudPayments.Cash.Tests
         [Fact]
         public void ToJsonsStream_FromJsonStram_Tests()
         {
-            var stream = CashHttpClient.ToJsonsStream(new TestRequest {TestEnum = TestEnum.Second, Test = "asdfasdf"});
-            var obj = CashHttpClient.FromJsonStram<TestRequest>(stream);
+            var stream = CashHttpClient.ToJsonStream(new TestRequest {TestEnum = TestEnum.Second, Test = "asdfasdf"});
+            var obj = CashHttpClient.FromJsonStream<TestRequest>(stream);
             obj.TestEnum.Should().Be(TestEnum.Second);
             obj.Test.Should().Be("asdfasdf");
         }
 
-        class TestHttpHandler : IHttpHandler
-        {
-            private readonly Action<string> _assertRequestJson;
-
-            public TestHttpHandler(Action<string> assertRequestJson)
-            {
-                _assertRequestJson = assertRequestJson;
-            }
-            
-            public void SetupIdempotent(string requestId)
-            {
-            }
-
-            public async Task<HttpResponseMessage> PostAsync(string url, StreamContent toJsonsStreamContent, CancellationToken token)
-            {
-                var json = await toJsonsStreamContent.ReadAsStringAsync();
-                _assertRequestJson(json);
-                return new HttpResponseMessage { Content = CashHttpClient.ToJsonsStreamContent(new TestResponse { Success = true}) };
-            }
-        }
 
         public class TestResponse
         {
