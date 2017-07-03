@@ -4,7 +4,7 @@
     <Authors>ITGlobal</Authors>
     <Description>C# client for cloudpayments cash api</Description>
     <VersionPrefix>1.0.0</VersionPrefix>
-    <TargetFramework>netstandard1.3</TargetFramework>
+    <TargetFrameworks>netstandard1.3;net451</TargetFrameworks>
     <PackageProjectUrl>https://github.com/ITGlobal/cloudpayments-cash</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ITGlobal/cloudpayments-cash</RepositoryUrl>
     <PackageTags>cloudpayments;cash;api;client</PackageTags>
