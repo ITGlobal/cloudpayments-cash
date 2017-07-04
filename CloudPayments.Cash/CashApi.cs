@@ -67,6 +67,24 @@ namespace CloudPayments.Cash
             );
         }
 
+        /// <summary>
+        /// get default implementation of CashApi
+        /// </summary>
+        /// <param name="settings">settings for cash api</param>
+        /// <param name="httpLog"></param>
+        /// <param name="cashHttpLog"></param>
+        /// <returns>api interface</returns>
+        public static ICashApi GetDefault(CashSettings settings, ILogger<IHttpHandler> httpLog, ILogger<ICashHttpClient> cashHttpLog)
+        {
+            return new CashApi(
+                new CashHttpClient(
+                    new HttpHandler(settings, httpLog),
+                    cashHttpLog
+                ),
+                settings
+            );
+        }
+
         #endregion
     }
 }
