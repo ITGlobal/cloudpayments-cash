@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace CloudPayments.Cash
 {
-    internal class HttpHandler : IHttpHandler
+    public class HttpHandler : IHttpHandler
     {
         private readonly HttpClient _client;
         private readonly ILogger<IHttpHandler> _logger;
